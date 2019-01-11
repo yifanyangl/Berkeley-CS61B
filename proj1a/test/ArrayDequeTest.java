@@ -111,4 +111,29 @@ public class ArrayDequeTest {
         assertEquals(Integer.valueOf(3), testDeque.removeLast());
         assertArrayEquals(new Integer[]{4}, testDeque.toArray());
     }
+
+    @Test
+    public void testMegaAddFirst() {
+        // Test resizing while adding to front
+        int N = 1000000;
+        for (int i = 0; i < N; i++) {
+            testDeque.addFirst(i);
+        }
+
+        for (int i = 0; i < N; i++) {
+            assertEquals(Integer.valueOf(N - 1 - i), testDeque.get(i));
+        }
+    }
+
+    @Test
+    public void testMegaAddLast() {
+        int N = 1000000;
+        for (int i = 0; i < N; i++) {
+            testDeque.addLast(i);
+        }
+
+        for (int i = 0; i < N; i++) {
+            assertEquals(Integer.valueOf(i), testDeque.get(i));
+        }
+    }
 }

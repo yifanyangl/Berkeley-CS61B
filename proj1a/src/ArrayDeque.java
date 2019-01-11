@@ -74,11 +74,17 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         items[nextFirst] = item;
         advanceNextFirst();
+        if (nextFirst == nextLast) {
+            expandArray();
+        }
     }
 
     public void addLast(T item) {
         items[nextLast] = item;
         advanceNextLast();
+        if (nextFirst == nextLast) {
+            expandArray();
+        }
     }
 
     public T removeFirst() {
@@ -149,6 +155,35 @@ public class ArrayDeque<T> {
             index = items.length - 1;
         }
         return index;
+    }
+
+    /**
+     * Expands array multiplicatively where the factor is 2.
+     *
+     * <p>After allocating more memory boxes, moves items starting from index nextFirst to the very
+     * end of the new array, "leaving room" for the two "colliding" indices nextFirst and nextLast.
+     *
+     * <p>Assumes before expanding, nextFirst and nextLast are pointing to the same position
+     * which is the last null "spot" before the array becomes full. After expanding, nextFirst will
+     * be set to new position.
+     */
+    private void expandArray() {
+        // After expanding array,
+        int oldLen = items.length;
+        int newLen = oldLen * 2;
+        int lenToMove = oldLen - nextFirst - 1;
+        T[] newItems = (T[]) new Object[newLen];
+        // Copies items from old array to the new one up to nextFirst - 1
+        System.arraycopy(items, 0, newItems, 0, nextFirst);
+        // Copies items that need to be put towards the end
+        System.arraycopy(
+            items, incIndexCircular(nextFirst),
+            newItems, newLen - lenToMove,
+            lenToMove
+        );
+        // nextLast does not change
+        nextFirst = newLen - lenToMove - 1;
+        items = newItems;
     }
 
     private int incIndexCircular(int index) {
