@@ -1,10 +1,9 @@
-package src;/*
+/*
 Project 1A.1
 As your first deque implementation, you’ll build the LinkedListDeque class, which will be linked
 list based.
 
 Your operations are subject to the following rules:
-
 - add and remove operations must not involve any looping or recursion.
   A single such operation must take “constant time”,
   i.e. execution time should not depend on the size of the deque.
@@ -38,6 +37,7 @@ In addition, you also need to implement:
 Your class should accept any generic type (not just integers).
 You may add any private helper classes or methods in LinkedListDeque.java if you deem it necessary.
  */
+package src;
 
 public class LinkedListDeque<T> {
 
@@ -79,6 +79,7 @@ public class LinkedListDeque<T> {
         for (int i = 0;
             i < index && node != sentinel;
             i++, node = node.next) {
+            // do nothing
         }
 
         if (node == sentinel) {
@@ -105,7 +106,7 @@ public class LinkedListDeque<T> {
             node = node.next;
         }
         if (size > 0) {
-           System.out.println();
+            System.out.println();
         }
     }
 
