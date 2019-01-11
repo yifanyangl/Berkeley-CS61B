@@ -37,7 +37,6 @@ In addition, you also need to implement:
 Your class should accept any generic type (not just integers).
 You may add any private helper classes or methods in LinkedListDeque.java if you deem it necessary.
  */
-package src;
 
 public class LinkedListDeque<T> {
 

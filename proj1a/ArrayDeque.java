@@ -36,7 +36,6 @@ if your front pointer is at position zero, and you addFirst, the front pointer s
 around to the end of the array (so the new front item in the deque will be the last item in the
 underlying array).
  */
-package src;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
