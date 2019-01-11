@@ -45,14 +45,14 @@ public class LinkedListDeque<T> {
 
     private static class DequeNode<T> {
 
-        public T item;
-        public DequeNode<T> prev;
-        public DequeNode<T> next;
+        T item;
+        DequeNode<T> prev;
+        DequeNode<T> next;
 
-        public DequeNode() {
+        DequeNode() {
         }
 
-        public DequeNode(T item, DequeNode<T> prev, DequeNode<T> next) {
+        DequeNode(T item, DequeNode<T> prev, DequeNode<T> next) {
             this.item = item;
             this.prev = prev;
             this.next = next;

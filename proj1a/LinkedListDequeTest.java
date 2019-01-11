@@ -230,4 +230,4 @@ public class LinkedListDequeTest {
         removeLastTest();
         addRemoveTest();
     }
-} 
+}
