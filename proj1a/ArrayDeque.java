@@ -125,7 +125,7 @@ public class ArrayDeque<T> {
         return items[(nextFirst + 1 + index) % items.length];
     }
 
-    public T[] toArray() {
+    T[] toArray() {
         T[] ret = (T[]) new Object[size()];
         if (nextFirst < nextLast) {
             System.arraycopy(items, nextFirst + 1, ret, 0, nextLast - nextFirst - 1);
@@ -144,7 +144,7 @@ public class ArrayDeque<T> {
         );
     }
 
-    public int length() {
+    int length() {
         return items.length;
     }
 
@@ -243,13 +243,5 @@ public class ArrayDeque<T> {
 
     private int incIndexCircular(int index) {
         return (index + 1) % items.length;
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        deque.addLast(1);
-        deque.addLast(2);
-        deque.addLast(3);
-        deque.printDeque();
     }
 }

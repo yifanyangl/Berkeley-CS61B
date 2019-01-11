@@ -75,10 +75,10 @@ public class LinkedListDeque<T> {
             throw new IndexOutOfBoundsException(String.format("Index %d is out of bound.", index));
         }
         DequeNode<T> node = sentinel.next;
-        for (int i = 0;
-            i < index && node != sentinel;
-            i++, node = node.next) {
-            // do nothing
+        int i = 0;
+        while (i < index && node != sentinel) {
+            i++;
+            node = node.next;
         }
 
         if (node == sentinel) {
