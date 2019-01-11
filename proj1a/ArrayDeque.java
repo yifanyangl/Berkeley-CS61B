@@ -240,12 +240,4 @@ public class ArrayDeque<T> {
     private int incIndexCircular(int index) {
         return (index + 1) % items.length;
     }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        deque.addLast(1);
-        deque.addLast(2);
-        deque.addLast(3);
-        deque.printDeque();
-    }
 }
