@@ -53,6 +53,8 @@ import java.util.stream.Collectors;
 public class ArrayDeque<T> {
 
     private static int INIT_LENGTH = 8;
+    private static double MIN_USAGE_RATIO = 0.25;
+    private static int MIN_LENGTH_USAGE_THRESHOLD = 16;
     private T[] items;
     private int nextFirst;
     private int nextLast;
@@ -94,6 +96,11 @@ public class ArrayDeque<T> {
         retreatNextFirst();
         T itemRemoved = items[nextFirst];
         items[nextFirst] = null;
+
+        if (isUsageLow()) {
+            shrinkArray();
+        }
+
         return itemRemoved;
     }
 
@@ -104,6 +111,11 @@ public class ArrayDeque<T> {
         retreatNextLast();
         T itemRemoved = items[nextLast];
         items[nextLast] = null;
+
+        if (isUsageLow()) {
+            shrinkArray();
+        }
+
         return itemRemoved;
     }
 
@@ -131,6 +143,10 @@ public class ArrayDeque<T> {
             .map(String::valueOf)
             .collect(Collectors.joining(" "))
         );
+    }
+
+    public int length() {
+        return items.length;
     }
 
     private void advanceNextFirst() {
@@ -168,7 +184,6 @@ public class ArrayDeque<T> {
      * be set to new position.
      */
     private void expandArray() {
-        // After expanding array,
         int oldLen = items.length;
         int newLen = oldLen * 2;
         int lenToMove = oldLen - nextFirst - 1;
@@ -184,6 +199,43 @@ public class ArrayDeque<T> {
         // nextLast does not change
         nextFirst = newLen - lenToMove - 1;
         items = newItems;
+    }
+
+    /**
+     * Halves the length of array.
+     *
+     * <p>Assumes size is less than or equal to length/2 - 2 (2 positions are for the two indices).
+     */
+    private void shrinkArray() {
+        int oldLen = items.length;
+        int newLen = oldLen / 2;
+        int lenToMove;
+        T[] newItems = (T[]) new Object[newLen];
+
+        if (nextFirst < nextLast) {
+            lenToMove = nextLast - nextFirst - 1;
+            int newFirst = (newLen - lenToMove - 1) / 2;
+            System.arraycopy(items, incIndexCircular(nextFirst), newItems, newFirst, lenToMove);
+            nextFirst = decIndexCircular(newFirst);
+            nextLast = incIndexCircular(nextFirst + lenToMove);
+        } else {
+            lenToMove = oldLen - nextFirst - 1;
+            System.arraycopy(items, 0, newItems, 0, nextLast);
+            System.arraycopy(
+                items, incIndexCircular(nextFirst),
+                newItems, newLen - lenToMove,
+                lenToMove
+            );
+            nextFirst = newLen - lenToMove - 1;
+        }
+        items = newItems;
+    }
+
+    private boolean isUsageLow() {
+        if (items.length >= MIN_LENGTH_USAGE_THRESHOLD) {
+            return (double) size() / items.length < MIN_USAGE_RATIO;
+        }
+        return false;
     }
 
     private int incIndexCircular(int index) {

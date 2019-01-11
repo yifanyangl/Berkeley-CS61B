@@ -136,4 +136,34 @@ public class ArrayDequeTest {
             assertEquals(Integer.valueOf(i), testDeque.get(i));
         }
     }
+
+    @Test
+    public void testMegaRemoveFirst() {
+        int N = (int) Math.pow(2, 20);
+        for (int i = 0; i < N; i++) {
+            testDeque.addLast(i);
+        }
+
+        for (int i = 0; i < N - N / 4 + 1; i++) {
+            testDeque.removeFirst();
+        }
+
+        assertEquals(N / 2, testDeque.length());
+        assertEquals(N / 4 - 1, testDeque.size());
+    }
+
+    @Test
+    public void testMegaRemoveLast() {
+        int N = (int) Math.pow(2, 20);
+        for (int i = 0; i < N; i++) {
+            testDeque.addLast(i);
+        }
+
+        for (int i = 0; i < N - N / 4 + 1; i++) {
+            testDeque.removeLast();
+        }
+
+        assertEquals(N / 2, testDeque.length());
+        assertEquals(N / 4 - 1, testDeque.size());
+    }
 }
