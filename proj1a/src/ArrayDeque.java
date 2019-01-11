@@ -38,6 +38,9 @@ underlying array).
  */
 package src;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * A deque implemented using an array internally.
  *
@@ -70,15 +73,32 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         items[nextFirst] = item;
-        nextFirst = (nextFirst - 1) % items.length;
-        if (nextFirst == -1) {
-            nextFirst = items.length - 1;
-        }
+        advanceNextFirst();
     }
 
     public void addLast(T item) {
         items[nextLast] = item;
-        nextLast = (nextLast + 1) % items.length;
+        advanceNextLast();
+    }
+
+    public T removeFirst() {
+        if (incIndexCircular(nextFirst) == nextLast) {
+            return null;
+        }
+        retreatNextFirst();
+        T itemRemoved = items[nextFirst];
+        items[nextFirst] = null;
+        return itemRemoved;
+    }
+
+    public T removeLast() {
+        if (decIndexCircular(nextLast) == nextFirst) {
+            return null;
+        }
+        retreatNextLast();
+        T itemRemoved = items[nextLast];
+        items[nextLast] = null;
+        return itemRemoved;
     }
 
     public T get(int index) {
@@ -98,5 +118,48 @@ public class ArrayDeque<T> {
             System.arraycopy(items, 0, ret, lenFirstHalf, nextLast);
         }
         return ret;
+    }
+
+    public void printDeque() {
+        System.out.println(Arrays.stream(toArray())
+            .map(String::valueOf)
+            .collect(Collectors.joining(" "))
+        );
+    }
+
+    private void advanceNextFirst() {
+        nextFirst = decIndexCircular(nextFirst);
+    }
+
+    private void retreatNextFirst() {
+        nextFirst = incIndexCircular(nextFirst);
+    }
+
+    private void advanceNextLast() {
+        nextLast = incIndexCircular(nextLast);
+    }
+
+    private void retreatNextLast() {
+        nextLast = decIndexCircular(nextLast);
+    }
+
+    private int decIndexCircular(int index) {
+        index = (index - 1) % items.length;
+        if (index == -1) {
+            index = items.length - 1;
+        }
+        return index;
+    }
+
+    private int incIndexCircular(int index) {
+        return (index + 1) % items.length;
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.printDeque();
     }
 }

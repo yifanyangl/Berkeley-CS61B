@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -71,5 +72,43 @@ public class ArrayDequeTest {
         testDeque.addFirst(67);
         testDeque.addLast(7);
         assertArrayEquals(new Integer[]{67, 3, 5, 4, -8, 14, 7}, testDeque.toArray());
+    }
+
+    @Test
+    public void testRemoveFirstFromEmptyArray() {
+        assertNull(testDeque.removeFirst());
+    }
+
+    @Test
+    public void testRemoveFirstBeforeResizing() {
+        testDeque.addLast(4);
+        testDeque.addLast(3);
+        testDeque.addLast(5);
+        int removed = testDeque.removeFirst();
+        assertArrayEquals(new Integer[]{3, 5}, testDeque.toArray());
+        assertEquals(2, testDeque.size());
+        assertEquals(4, removed);
+
+        assertEquals(Integer.valueOf(3), testDeque.removeFirst());
+        assertArrayEquals(new Integer[]{5}, testDeque.toArray());
+    }
+
+    @Test
+    public void testRemoveLastFromEmptyArray() {
+        assertNull(testDeque.removeLast());
+    }
+
+    @Test
+    public void testRemoveLastBeforeResizing() {
+        testDeque.addLast(4);
+        testDeque.addLast(3);
+        testDeque.addLast(5);
+        int removed = testDeque.removeLast();
+        assertArrayEquals(new Integer[]{4, 3}, testDeque.toArray());
+        assertEquals(2, testDeque.size());
+        assertEquals(5, removed);
+
+        assertEquals(Integer.valueOf(3), testDeque.removeLast());
+        assertArrayEquals(new Integer[]{4}, testDeque.toArray());
     }
 }
