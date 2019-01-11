@@ -1,4 +1,4 @@
-/*
+package src;/*
 Project 1A.1
 As your first deque implementation, you’ll build the LinkedListDeque class, which will be linked
 list based.
