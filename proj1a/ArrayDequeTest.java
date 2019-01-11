@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -162,5 +164,25 @@ public class ArrayDequeTest {
 
         assertEquals(N / 2, testDeque.length());
         assertEquals(N / 4 - 1, testDeque.size());
+    }
+
+    @Test
+    public void testIsEmpty() {
+        assertTrue(testDeque.isEmpty());
+        testDeque.addFirst(1);
+        assertFalse(testDeque.isEmpty());
+        testDeque.removeFirst();
+        assertTrue(testDeque.isEmpty());
+
+        int N = 100;
+        for (int i = 0; i < N; i++) {
+            testDeque.addLast(i);
+            assertFalse(testDeque.isEmpty());
+        }
+        for (int i = 0; i < N; i++) {
+            testDeque.removeFirst();
+        }
+
+        assertTrue(testDeque.isEmpty());
     }
 }
