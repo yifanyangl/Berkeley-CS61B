@@ -125,7 +125,7 @@ public class ArrayDeque<T> {
         return items[(nextFirst + 1 + index) % items.length];
     }
 
-    T[] toArray() {
+    private T[] toArray() {
         T[] ret = (T[]) new Object[size()];
         if (nextFirst < nextLast) {
             System.arraycopy(items, nextFirst + 1, ret, 0, nextLast - nextFirst - 1);
@@ -142,10 +142,6 @@ public class ArrayDeque<T> {
             .map(String::valueOf)
             .collect(Collectors.joining(" "))
         );
-    }
-
-    int length() {
-        return items.length;
     }
 
     public boolean isEmpty() {
