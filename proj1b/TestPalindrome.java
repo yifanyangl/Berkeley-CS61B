@@ -51,4 +51,13 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("ab", cc));
         assertTrue(palindrome.isPalindrome("bca", cc));
     }
+
+    @Test
+    public void testOffByNPalindrome() {
+        CharacterComparator cc = new OffByN(4);
+        assertTrue(palindrome.isPalindrome("ripen", cc));
+        assertTrue(palindrome.isPalindrome("skoo", cc));
+        assertFalse(palindrome.isPalindrome("noon", cc));
+        assertFalse(palindrome.isPalindrome("react", cc));
+    }
 }
