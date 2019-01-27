@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -11,10 +13,29 @@ public class TestPalindrome {
     @Test
     public void testWordToDeque() {
         Deque d = palindrome.wordToDeque("persiflage");
-        String actual = "";
+        StringBuilder actual = new StringBuilder();
         for (int i = 0; i < "persiflage".length(); i++) {
-            actual += d.removeFirst();
+            actual.append(d.removeFirst());
         }
-        assertEquals("persiflage", actual);
+        assertEquals("persiflage", actual.toString());
+    }
+
+    @Test
+    public void testWordOfLengthOneOrZeroIsPalindrome() {
+        assertTrue(palindrome.isPalindrome("1"));
+        assertTrue(palindrome.isPalindrome("a"));
+        assertTrue(palindrome.isPalindrome(""));
+    }
+
+    @Test
+    public void testNonPalindrome() {
+        assertFalse(palindrome.isPalindrome("cat"));
+        assertFalse(palindrome.isPalindrome("intellij"));
+    }
+
+    @Test
+    public void testLongPalindrome() {
+        assertTrue(palindrome.isPalindrome("noon"));
+        assertTrue(palindrome.isPalindrome("racecar"));
     }
 }

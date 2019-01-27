@@ -11,4 +11,15 @@ public class Palindrome {
         }
         return deque;
     }
+
+    public boolean isPalindrome(String word) {
+        return isDequePalindrome(wordToDeque(word));
+    }
+
+    private boolean isDequePalindrome(Deque<Character> deque) {
+        if (deque.size() == 1 || deque.size() == 0) {
+            return true;
+        }
+        return deque.removeFirst() == deque.removeLast() && isDequePalindrome(deque);
+    }
 }
