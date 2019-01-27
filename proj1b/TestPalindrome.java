@@ -38,4 +38,17 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("noon"));
         assertTrue(palindrome.isPalindrome("racecar"));
     }
+
+    @Test
+    public void testOffByOnePalindrome() {
+        CharacterComparator cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("1", cc));
+        assertTrue(palindrome.isPalindrome("a", cc));
+        assertTrue(palindrome.isPalindrome("", cc));
+        assertFalse(palindrome.isPalindrome("cat", cc));
+        assertFalse(palindrome.isPalindrome("noon", cc));
+
+        assertTrue(palindrome.isPalindrome("ab", cc));
+        assertTrue(palindrome.isPalindrome("bca", cc));
+    }
 }

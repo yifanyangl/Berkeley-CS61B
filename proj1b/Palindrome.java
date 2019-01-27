@@ -13,13 +13,23 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word) {
-        return isDequePalindrome(wordToDeque(word));
+        return isDequePalindrome(wordToDeque(word), (x, y) -> x == y);
     }
 
-    private boolean isDequePalindrome(Deque<Character> deque) {
+
+    /**
+     * Returns true if the word is a palindrome according to the character comparison test provided
+     * by the CharacterComparator passed in.
+     */
+    public boolean isPalindrome(String word, CharacterComparator cc) {
+        return isDequePalindrome(wordToDeque(word), new OffByOne());
+    }
+
+    private boolean isDequePalindrome(Deque<Character> deque, CharacterComparator cc) {
         if (deque.size() == 1 || deque.size() == 0) {
             return true;
         }
-        return deque.removeFirst() == deque.removeLast() && isDequePalindrome(deque);
+        return cc.equalChars(deque.removeFirst(), deque.removeLast()) && isDequePalindrome(deque,
+            cc);
     }
 }
