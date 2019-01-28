@@ -15,4 +15,22 @@ public class TestOffByN {
         assertFalse(cc.equalChars('f', 'h'));
     }
 
+    @Test
+    public void testTakingUppercaseLetters() {
+        cc = new OffByN(7);
+        assertTrue(cc.equalChars('A', 'H'));
+        assertTrue(cc.equalChars('H', 'A'));
+        assertTrue(cc.equalChars('Z', 'a'));
+        assertFalse(cc.equalChars('a', 'H'));
+    }
+
+    @Test
+    public void testTakingNonAlpha() {
+        cc = new OffByN(2);
+        assertTrue(cc.equalChars(']', '_'));
+        assertTrue(cc.equalChars('a', '_'));
+        assertFalse(cc.equalChars(']', '^'));
+        assertFalse(cc.equalChars('a', '`'));
+        assertFalse(cc.equalChars('A', '_'));
+    }
 }
